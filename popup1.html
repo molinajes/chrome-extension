@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Building a router</title>
+  <script>
+    var routes = {};
+    function route (path, templateId, controller) {
+      routes[path] = {templateId: templateId, controller: controller};
+    }
+    var el = null;
+    function router () {
+      el = el || document.getElementById('view');
+        var url = location.hash.slice(1) || '/';
+        var route = routes[url];
+        if (el && route.controller) {
+            el.innerHTML = tmpl(route.templateId, new route.controller());
+        }
+    }
+    window.addEventListener('hashchange', router);
+    window.addEventListener('load', router);
+  </script>
+  <script type="text/html" id="home">
+    <h1>Router FTW!</h1>
+  </script>
+  <script type="text/html" id="template1">
+    <h1>Page 1: <%= greeting %></h1>
+    <p><%= moreText %></p>
+  </script>
+  <script type="text/html" id="template2">
+    <h1>Page 2: <%= heading %></h1>
+    <p>Lorem ipsum...</p>
+  </script>
+</head>
+<body>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#/page1">Page 1</a></li>
+    <li><a href="#/page2">Page 2</a></li>
+  </ul>
+  <div id="view"></div>
+  <script>
+    route('/', 'home', function () {});
+    route('/page1', 'template1', function () {
+      this.greeting = 'Hello world!';
+        this.moreText = 'Bacon ipsum...';
+    });
+    route('/page2', 'template2', function () {
+      this.heading = 'I\'m page two!';
+    });
+  </script>
+</body>
+</html>

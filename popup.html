@@ -12,8 +12,8 @@
 </head>
 
 <body>
-    <div">
-        <div class = "head">
+    <div id="homecontainer">
+        <div class = "head" id="header">
             <div class= "row">
                 <div class="col float-left">
                     <img class = "greenlight" src="./src/Greenlight.png"/>
@@ -58,6 +58,50 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="footer">
+            <div class="row commentInput">
+                <div class="left_input">
+                    <input type="text" class="input" placeholder="Comment this page..."/>                        
+                </div>
+                <div class="icon_container">
+                    <i class="fa fa-smile-o" style="font-size:36px"></i>
+                </div>                
+                <div class="icon_container">
+                    <i class="fa fa-telegram" style="font-size:36px"></i>
+                </div>                
+            </div>
+            <div class="row button-container">
+                <button class="btn btn-primary button" id="addcomment">Add spot comments</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="maincontainer">
+        <div class = "head" id="header">
+            <div class= "row">
+                <div class="col float-left">
+                    <button id="hometag">Home</button>
+                </div>
+                <div class="col float-right">
+                    <img src="./src/avarta.png" class="circleimage"/>
+                    <i class='fas fa-bars' style='font-size:18px'></i> 
+                </div>
+            </div>
+            <div class= "row headerbotcontainer">
+                <div class="inputurlcontainer">
+                    <input id="urlinput" type="text"/>
+                </div>
+                <div class="sharebuttoncontainer">
+                    <i class='far fa-bell'></i>
+                    <button class="sharebutton">SHARE</button>
+                </div>
+            </div>
+        </div>
+        <div class = "containter body">
+
+        </div>
+        <div class="footer">
             <div class="row commentInput">
                 <div class="left_input">
                     <input type="text" class="input" placeholder="Comment this page..."/>                        
@@ -72,12 +116,16 @@
             <div class="row button-container">
                 <button class="btn btn-primary button">Add spot comments</button>
             </div>
+
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/custome.js"></script>
+    
     </body>
 
 </html>
