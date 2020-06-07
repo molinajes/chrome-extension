@@ -162,11 +162,29 @@ function inserted() {
         ele = document.createElement('div');
         ele.classList.add("addcommentswindow")
         ele.style.position = "absolute";
-        react = ele.getBoundingClientRect();
-        X = x.toString() + 'px';
-        Y = y.toString() + 'px';
-        console.log(react, y, x);
-        console.log(elementMouseIsOver.offsetTop,elementMouseIsOver.offsetLeft, elementMouseIsOver.offsetWidth, elementMouseIsOver.offsetHeight);
+
+
+
+        console.log(clienty, clientx);
+        console.log(y, window.innerHeight, x, window.innerWidth);
+        console.log(y, document.body.scrollHeight,x, document.body.scrollWidth);
+        ptrx = x;
+        ptry = y;
+        windowWidth = document.body.scrollWidth; windowHeight = window.innerHeight
+        winWidth = 470; winHeight = 208;
+        if (ptry + winHeight> windowHeight) {
+            if(ptry-winHeight> 0) {
+                ptry -= (winHeight+15+15);
+            }
+        } 
+        if (ptrx + winWidth > windowWidth) {
+            ptrx = windowWidth-winWidth - 15;
+        }
+        ptrx += 15;
+        ptry += 15;
+
+        X = ptrx.toString() + 'px';
+        Y = ptry.toString() + 'px';    
         // left = ((X/elementMouseIsOver.offsetWidth) * 100).toString() + "%";
         // top = ((Y/elementMouseIsOver.offsetHeight) * 100).toString() + "%";
         
@@ -245,7 +263,7 @@ function inserted() {
             transform: translate(-50%, -50%);
             /* margin: auto; */
             ">
-            <div style="width: 40%;height: 40%;border-radius: 50%;/* background-color: white; */margin: auto;margin-top: 30%;margin-bottom: 30%;text-align: center;line-height: 9px;color: white;font-size: 17px;/* padding-right: 2px; */">
+            <div style="border-radius: 50%;/* background-color: white; */margin: auto;margin-top: 30%;margin-bottom: 30%;text-align: center;line-height: 9px;color: white;font-size: 17px;/* padding-right: 2px; */">
                 ${commentid}
             </div>
             </div>`;
