@@ -1,7 +1,8 @@
-// This is included and executed in the inspected page
+// This is included and executed in the inspected page 
 var postedflag = false;
 var commentid = 1;
 function inserted() {
+    localStorage.setItem('commentid', 1);
     window.innerHeight = 900;
     window.innerWidth = 1440;
     console.log("Here is addcomments")
@@ -12,11 +13,11 @@ function inserted() {
     document.body.style.cursor = "url";
     document.addEventListener("click",handler);
     function handler(event) {
-        if(postedflag) {
-            postedflag = false;
-            return;
-        }
-        postedflag = true;
+        // if(postedflag) {
+        //     postedflag = false;
+        //     return;
+        // }
+        // postedflag = true;
         event.stopPropagation();
         event.preventDefault();
         var x = event.pageX, y = event.pageY;
@@ -198,7 +199,7 @@ function inserted() {
 
         prevaddelem.style.top = posY;
         prevaddelem.style.left = posX;
-        prevaddelem.style.zIndex = 101;
+        prevaddelem.style.zIndex = 100;
  
 
         prevaddelem.style.position = "absolute";
@@ -218,14 +219,14 @@ function inserted() {
         cancel = ele.querySelector('.addcomment_cancel');
         draw = ele.querySelector('.addcomment_draw');
         post = ele.querySelector('.addcomment_post');
-        post.addEventListener('click', addcomment);
-        cancel.addEventListener('click', cancelcomment);
+        post.addEventListener('mouseup', addcomment);
+        cancel.addEventListener('mouseup', cancelcomment);
         console.log(cancel, draw, post)
         function cancelcomment(e) {
             console.log(e)
             console.log('click cancel')
-            post.removeEventListener('click', addcomment);
-            cancel.removeEventListener('click', cancelcomment);
+            post.removeEventListener('mouseup', addcomment);
+            cancel.removeEventListener('mouseup', cancelcomment);
             document.removeEventListener('click', nothing);
             document.addEventListener('click', handler);
             document.querySelector('.addcommentswindow').remove();    
@@ -255,15 +256,15 @@ function inserted() {
    
            spotcommentelem.style.top = posY;
            spotcommentelem.style.left = posX;
-           spotcommentelem.style.zIndex = 101;
+           spotcommentelem.style.zIndex = 100;
     
    
            spotcommentelem.style.position = "absolute";
            document.body.appendChild(spotcommentelem);
 
 
-           post.removeEventListener('click', addcomment);
-           cancel.removeEventListener('click', cancelcomment);
+           post.removeEventListener('mouseup', addcomment);
+           cancel.removeEventListener('mouseup', cancelcomment);
            document.removeEventListener('click', nothing);
            document.addEventListener('click', handler);
 
