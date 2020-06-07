@@ -1,6 +1,9 @@
 // This is included and executed in the inspected page
 var postedflag = false;
+var commentid = 1;
 function inserted() {
+    window.innerHeight = 900;
+    window.innerWidth = 1440;
     console.log("Here is addcomments")
     // document.addEventListener('mousemove', this.log);
     // document.removeEventListener('mousemove', this.log);
@@ -123,7 +126,7 @@ function inserted() {
         padding: 0px 10px 0px 10px;
         background-color: #252C37;
     "> 
-                <textarea type="text" style="
+                <textarea  class="commenttextarea" type="text" style="
         width: 90%;
         height: 38px;
         background-color: inherit;
@@ -132,13 +135,34 @@ function inserted() {
         font-size: 19px;
     "></textarea>
             </div>
-        </div>`        
+        </div>`;
+
+        prevaddelemcontent = `<div style="
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #2982FF;
+        border: solid;
+        transform: translate(-50%, -50%);
+        /* margin: auto; */
+    ">
+        <div style="
+        width: 40%;
+        height: 40%;
+        border-radius: 50%;
+        background-color: white;
+        margin: auto;
+        margin-top: 30%;
+    ">
+            
+        </div>
+    </div>`        
         ele = document.createElement('div');
         ele.classList.add("addcommentswindow")
         ele.style.position = "absolute";
         react = ele.getBoundingClientRect();
-        X = y-elementMouseIsOver.offsetTop;
-        Y = x-elementMouseIsOver.offsetLeft;
+        X = x.toString() + 'px';
+        Y = y.toString() + 'px';
         console.log(react, y, x);
         console.log(elementMouseIsOver.offsetTop,elementMouseIsOver.offsetLeft, elementMouseIsOver.offsetWidth, elementMouseIsOver.offsetHeight);
         // left = ((X/elementMouseIsOver.offsetWidth) * 100).toString() + "%";
@@ -146,20 +170,45 @@ function inserted() {
         
         // ele.style.top = top;
         // ele.style.left = left;
-        ele.style.top = X.toString() + 'px';
-        ele.style.left = Y.toString() + 'px';
-        ele.style.zIndex = 900000;
-        elementMouseIsOver.style.position = "relative";
+
+
+        ele.style.top = Y;
+        ele.style.left = X;
+        ele.style.zIndex = 100;
         // console.log(left, top);
         // ele.style.top = y-elementMouseIsOver.style.top;
         // ele.style.left = x-elementMouseIsOver.style.left;
         // ele.style.zIndex = 90;
         ele.innerHTML = elecontent;
-        console.log(elementMouseIsOver.style.top,elementMouseIsOver.style.left, x, y)
-        elementMouseIsOver.appendChild(ele);
-        // document.body.appendChild(ele);
+
+
+        // elementMouseIsOver.appendChild(ele);
         ele.style.position = "absolute";
-            // document.addEventListener('mousemove', this.log);
+        document.body.appendChild(ele);
+
+
+
+
+        prevaddelem = document.createElement('div');
+        prevaddelem.innerHTML = prevaddelemcontent;
+        prevaddelem.classList.add("prevaddelemwindow")
+        prevaddelem.style.position = "absolute";
+        posX = x.toString() + 'px';
+        posY = y.toString() + 'px';
+
+        prevaddelem.style.top = posY;
+        prevaddelem.style.left = posX;
+        prevaddelem.style.zIndex = 101;
+ 
+
+        prevaddelem.style.position = "absolute";
+        document.body.appendChild(prevaddelem);
+
+
+        
+
+
+    
         document.removeEventListener('click', handler);
         document.addEventListener('click', nothing)
         function nothing(event) {
@@ -180,12 +229,61 @@ function inserted() {
             document.removeEventListener('click', nothing);
             document.addEventListener('click', handler);
             document.querySelector('.addcommentswindow').remove();    
+            document.querySelector('.prevaddelemwindow').remove();    
+
         }
         function addcomment() {
-            
+           commentspotcontent = `<div style="
+           width: 30px;
+           height: 30px;
+           border-radius: 50%;
+           background-color: #2982FF;
+           border: solid;
+           transform: translate(-50%, -50%);
+           /* margin: auto; */
+           ">
+           <div style="width: 40%;height: 40%;border-radius: 50%;/* background-color: white; */margin: auto;margin-top: 30%;margin-bottom: 30%;text-align: center;line-height: 9px;color: white;font-size: 17px;/* padding-right: 2px; */">
+               ${commentid}
+           </div>
+           </div>`;
+           spotcommentelem = document.createElement('div');
+           spotcommentelem.innerHTML = commentspotcontent;
+           spotcommentelem.classList.add("spotcommentelem")
+           spotcommentelem.style.position = "absolute";
+           posX = x.toString() + 'px';
+           posY = y.toString() + 'px';
+   
+           spotcommentelem.style.top = posY;
+           spotcommentelem.style.left = posX;
+           spotcommentelem.style.zIndex = 101;
+    
+   
+           spotcommentelem.style.position = "absolute";
+           document.body.appendChild(spotcommentelem);
+
+
+           post.removeEventListener('click', addcomment);
+           cancel.removeEventListener('click', cancelcomment);
+           document.removeEventListener('click', nothing);
+           document.addEventListener('click', handler);
+
+           textareacomment = document.querySelector('.commenttextarea');
+           comment = textareacomment.value;
+           document.querySelector('.addcommentswindow').remove();    
+           document.querySelector('.prevaddelemwindow').remove(); 
+
+           console.log(comment);
+           data = {commentid:commentid, posX:posX, posY:posY, comment:comment};
+           sendObjectToDevTools(data);
+           commentid+=1;
         }
        
     }
 	console.log('External script attached');
+}
+
+function sendObjectToDevTools(message) {
+    // The callback here can be used to execute something on receipt
+    chrome.extension.sendMessage(message, function(message){});
 }
 inserted();

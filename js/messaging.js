@@ -16,8 +16,8 @@
 
     // Listen to messages from the background page
     port.onMessage.addListener(function (message) {
-      document.querySelector('#insertmessagebutton').innerHTML = message.content;
-      // port.postMessage(message);
+        console.log(message);
+        document.querySelector('#containerbody').innerHTML = message.comment;
     });
 
 }());
