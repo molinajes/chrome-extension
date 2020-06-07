@@ -17,7 +17,42 @@
     // Listen to messages from the background page
     port.onMessage.addListener(function (message) {
         console.log(message);
-        document.querySelector('#containerbody').innerHTML = message.comment;
+        contenelemcontent = `<div class="commentpost_header" >
+        <div class="commentid" >
+                    ${message.commentid}
+        </div>		
+        <div class="commentuserimgcontainer">
+            <img class="commentuserimg" src="avarta.png" >
+        </div>		
+        <div class="commentusernamecontainer" >
+            <div>
+                <p class="commentusername" >Max S.</p>
+                <div class="commenttimecontainer">
+                    <div class="tviconcontainer">
+                        <i class="fa fa-television" aria-hidden="true"></i>	
+                    </div>
+                    <div class="timeinfo">
+                    Less than 1 Min
+                    </div>
+                </div>
+            </div>
+        </div>		
+        <div class="dot3">...</div>		
+        <div class="resolvebuttoncontainer" >
+            <button class="resolvebutton">RESOLVE</button>
+        </div>
+        </div>		
+        <div class="commenttext" > 
+            <p class="commentcontent" type="text" >${message.comment}</p>
+        </div>
+        <div class="commentreply" > 
+            <input class="commentreplyinput" type="text" >
+        </div>
+        `
+        commentelem = document.createElement('div');
+        commentelem.classList.add('commentelem');
+        commentelem.innerHTML = contenelemcontent;
+        document.querySelector('#containerbody').appendChild(commentelem)
     });
 
 }());

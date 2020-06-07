@@ -2,7 +2,8 @@
 var postedflag = false;
 var commentid = 1;
 function inserted() {
-    localStorage.setItem('commentid', 1);
+    localStorage.clear();
+    localStorage.setItem('currentcommentid', 1);
     window.innerHeight = 900;
     window.innerWidth = 1440;
     console.log("Here is addcomments")
@@ -193,18 +194,18 @@ function inserted() {
         prevaddelem = document.createElement('div');
         prevaddelem.innerHTML = prevaddelemcontent;
         prevaddelem.classList.add("prevaddelemwindow")
-        prevaddelem.style.position = "absolute";
+        // prevaddelem.style.position = "absolute";
         posX = x.toString() + 'px';
         posY = y.toString() + 'px';
 
-        prevaddelem.style.top = posY;
-        prevaddelem.style.left = posX;
-        prevaddelem.style.zIndex = 100;
+        // prevaddelem.style.top = posY;
+        // prevaddelem.style.left = posX;
+        // prevaddelem.style.zIndex = 100;
  
 
-        prevaddelem.style.position = "absolute";
-        document.body.appendChild(prevaddelem);
-
+        // prevaddelem.style.position = "absolute";
+        // document.body.appendChild(prevaddelem);
+        addElementtobody(prevaddelem, posX, posY);
 
         
 
@@ -234,53 +235,76 @@ function inserted() {
 
         }
         function addcomment() {
-           commentspotcontent = `<div style="
-           width: 30px;
-           height: 30px;
-           border-radius: 50%;
-           background-color: #2982FF;
-           border: solid;
-           transform: translate(-50%, -50%);
-           /* margin: auto; */
-           ">
-           <div style="width: 40%;height: 40%;border-radius: 50%;/* background-color: white; */margin: auto;margin-top: 30%;margin-bottom: 30%;text-align: center;line-height: 9px;color: white;font-size: 17px;/* padding-right: 2px; */">
-               ${commentid}
-           </div>
-           </div>`;
-           spotcommentelem = document.createElement('div');
-           spotcommentelem.innerHTML = commentspotcontent;
-           spotcommentelem.classList.add("spotcommentelem")
-           spotcommentelem.style.position = "absolute";
-           posX = x.toString() + 'px';
-           posY = y.toString() + 'px';
-   
-           spotcommentelem.style.top = posY;
-           spotcommentelem.style.left = posX;
-           spotcommentelem.style.zIndex = 100;
+            let commentid = parseInt(localStorage.getItem('currentcommentid'));
+            commentspotcontent = `<div style="
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #2982FF;
+            border: solid;
+            transform: translate(-50%, -50%);
+            /* margin: auto; */
+            ">
+            <div style="width: 40%;height: 40%;border-radius: 50%;/* background-color: white; */margin: auto;margin-top: 30%;margin-bottom: 30%;text-align: center;line-height: 9px;color: white;font-size: 17px;/* padding-right: 2px; */">
+                ${commentid}
+            </div>
+            </div>`;
+            spotcommentelem = document.createElement('div');
+            spotcommentelem.innerHTML = commentspotcontent;
+            spotcommentelem.classList.add("spotcommentelem")
+            spotcommentelem.style.position = "absolute";
+            posX = x.toString() + 'px';
+            posY = y.toString() + 'px';
     
-   
-           spotcommentelem.style.position = "absolute";
-           document.body.appendChild(spotcommentelem);
+            spotcommentelem.style.top = posY;
+            spotcommentelem.style.left = posX;
+            spotcommentelem.style.zIndex = 100;
+        
+    
+            spotcommentelem.style.position = "absolute";
+            document.body.appendChild(spotcommentelem);
 
 
-           post.removeEventListener('mouseup', addcomment);
-           cancel.removeEventListener('mouseup', cancelcomment);
-           document.removeEventListener('click', nothing);
-           document.addEventListener('click', handler);
+            post.removeEventListener('mouseup', addcomment);
+            cancel.removeEventListener('mouseup', cancelcomment);
+            document.removeEventListener('click', nothing);
+            document.addEventListener('click', handler);
 
-           textareacomment = document.querySelector('.commenttextarea');
-           comment = textareacomment.value;
-           document.querySelector('.addcommentswindow').remove();    
-           document.querySelector('.prevaddelemwindow').remove(); 
+            textareacomment = document.querySelector('.commenttextarea');
+            comment = textareacomment.value;
+            document.querySelector('.addcommentswindow').remove();    
+            document.querySelector('.prevaddelemwindow').remove(); 
 
-           console.log(comment);
-           data = {commentid:commentid, posX:posX, posY:posY, comment:comment};
-           sendObjectToDevTools(data);
-           commentid+=1;
+            console.log(comment);
+            // commentid = parseInt(localStorage.getItem('currentcommentid'));
+            date = new Date();
+            time = date.getTime();
+
+            data = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
+            itemkey = 'spotcomments_' + commentid.toString();
+
+            commentid+=1;
+            localStorage.setItem('currentcommentid', commentid);
+
+            sendObjectToDevTools(data);
+            localStorage.setItem(itemkey, JSON.stringify(data));
+            itemdata = JSON.parse(localStorage.getItem(itemkey));
+            console.log(itemdata, itemdata.posX)
         }
        
     }
 	console.log('External script attached');
+}
+
+function addElementtobody(el, posX, posY) {
+    el.style.position = "absolute";
+
+    el.style.top = posY;
+    el.style.left = posX;
+    el.style.zIndex = 100;
+
+
+    document.body.appendChild(el);
 }
 
 function sendObjectToDevTools(message) {
