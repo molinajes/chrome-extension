@@ -30,9 +30,8 @@
 #urlinput {
     width: 100%;
     background-color: #131820;
-    border: none;
-    color: white;
-    z-index: 100px;
+    border: solid 1px white;
+    border-radius: 5px;
 }
 #urlinput:hover {
     border: none;
