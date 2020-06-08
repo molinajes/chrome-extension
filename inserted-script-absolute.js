@@ -19,14 +19,15 @@ function inserted() {
         //     return;
         // }
         // postedflag = true;
-        event.stopPropagation();
-        event.preventDefault();
         var x = event.pageX, y = event.pageY;
         var clientx = event.clientX, clienty = event.clientY;
         elementMouseIsOver = document.elementFromPoint(clientx, clienty);
         if(elementMouseIsOver == null) {
+            alert("You can't add comments here!")
             return;
         }
+        event.stopPropagation();
+        event.preventDefault();
         console.log('event handler',elementMouseIsOver);
         function getDIVparent(el) {
             let ptr = el;
@@ -198,7 +199,7 @@ function inserted() {
 
         ele.style.top = Y;
         ele.style.left = X;
-        ele.style.zIndex = 100;
+        ele.style.zIndex = 1000;
         // console.log(left, top);
         // ele.style.top = y-elementMouseIsOver.style.top;
         // ele.style.left = x-elementMouseIsOver.style.left;
@@ -280,7 +281,7 @@ function inserted() {
     
             spotcommentelem.style.top = posY;
             spotcommentelem.style.left = posX;
-            spotcommentelem.style.zIndex = 100;
+            spotcommentelem.style.zIndex = 1000;
         
     
             spotcommentelem.style.position = "absolute";
@@ -335,7 +336,7 @@ function addElementtobody(el, posX, posY) {
 
     el.style.top = posY;
     el.style.left = posX;
-    el.style.zIndex = 100;
+    el.style.zIndex = 1000;
 
 
     document.body.appendChild(el);
