@@ -170,13 +170,14 @@ function inserted() {
         console.log(y, document.body.scrollHeight,x, document.body.scrollWidth);
         ptrx = x;
         ptry = y;
-        windowWidth = document.body.scrollWidth; windowHeight = window.innerHeight
+        windowWidth = document.body.scrollWidth; windowHeight =document.body.scrollHeight - document.body.scrollTop;
+        console.log(y,windowWidth,x, windowHeight);
         winWidth = 470; winHeight = 208;
-        if (ptry + winHeight> windowHeight) {
-            if(ptry-winHeight> 0) {
-                ptry -= (winHeight+15+15);
-            }
-        } 
+        // if (ptry + winHeight> windowHeight) {
+        //     if(ptry-winHeight> 0) {
+        //         ptry -= (winHeight+15+15);
+        //     }
+        // } 
         if (ptrx + winWidth > windowWidth) {
             ptrx = windowWidth-winWidth - 15;
         }
@@ -298,12 +299,24 @@ function inserted() {
             date = new Date();
             time = date.getTime();
 
-            data = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
-            itemkey = 'spotcomments_' + commentid.toString();
+            // data = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
+            // itemkey = 'spotcomments_' + commentid.toString();
+
+            // commentid+=1;
+            // localStorage.setItem('currentcommentid', commentid);
+
+            // sendObjectToDevTools(data);
+            // localStorage.setItem(itemkey, JSON.stringify(data));
+            // itemdata = JSON.parse(localStorage.getItem(itemkey));
+            // console.log(itemdata, itemdata.posX)
+
+            data = [];
+            dataitem = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
+            itemkey = 'spotcomments' + commentid.toString();
 
             commentid+=1;
             localStorage.setItem('currentcommentid', commentid);
-
+            
             sendObjectToDevTools(data);
             localStorage.setItem(itemkey, JSON.stringify(data));
             itemdata = JSON.parse(localStorage.getItem(itemkey));
