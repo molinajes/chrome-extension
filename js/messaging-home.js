@@ -7,20 +7,29 @@
 //   content: [String|Path to script|Object], // data to be passed through
 //   tabId: [Automatically added]
 // }
+// chrome.storage.sync.clear();
 data = JSON.parse(localStorage.getItem('spotcomments'));
 chrome.storage.sync.get('alldata', function(result) {
-    if(result !== undefined || result.length != 0) {
-        items = JSON.parse(result.alldata);
-        items.forEach(function(item) {
-            addCommentSTocontainer(item.commentid, item.comment, item.time);
-        })
-        console.log('result', result);
+    if(result !== undefined || result !== null || result.length != 0) {
+        try {
+            items = JSON.parse(result.alldata);
+            if(items !=null ) {
+                items.forEach(function(item) {
+                    addCommentSTocontainer(item.commentid, item.comment, item.time);
+                })
+                console.log('result', result);    
+            }
+                
+        } catch (error) {
+            
+        }
+
     }
     // console.log('data', items)
-    chrome.storage.sync.set({'alldata':null}, function() {
-        console.log('Settings saved');
-    });
-
+    // chrome.storage.sync.set({'alldata':null}, function() {
+    //     console.log('Settings saved');
+    // });
+    chrome.storage.sync.clear();
     });
 chrome.storage.local.get([], function(result) {
     console.log('Value currently is ', result);
