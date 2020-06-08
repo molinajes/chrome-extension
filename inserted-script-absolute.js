@@ -24,6 +24,9 @@ function inserted() {
         var x = event.pageX, y = event.pageY;
         var clientx = event.clientX, clienty = event.clientY;
         elementMouseIsOver = document.elementFromPoint(clientx, clienty);
+        if(elementMouseIsOver == null) {
+            return;
+        }
         console.log('event handler',elementMouseIsOver);
         function getDIVparent(el) {
             let ptr = el;
