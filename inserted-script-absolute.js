@@ -197,9 +197,9 @@ function inserted() {
         // ele.style.left = left;
 
 
-        ele.style.top = Y;
-        ele.style.left = X;
-        ele.style.zIndex = 1000;
+        // ele.style.top = Y;
+        // ele.style.left = X;
+        // ele.style.zIndex = 1000;
         // console.log(left, top);
         // ele.style.top = y-elementMouseIsOver.style.top;
         // ele.style.left = x-elementMouseIsOver.style.left;
@@ -208,9 +208,9 @@ function inserted() {
 
 
         // elementMouseIsOver.appendChild(ele);
-        ele.style.position = "absolute";
-        document.body.appendChild(ele);
-
+        // ele.style.position = "absolute";
+        // document.body.appendChild(ele);
+        addElementtobody(ele, X, Y)
 
 
 
@@ -275,17 +275,17 @@ function inserted() {
             spotcommentelem = document.createElement('div');
             spotcommentelem.innerHTML = commentspotcontent;
             spotcommentelem.classList.add("spotcommentelem")
-            spotcommentelem.style.position = "absolute";
-            posX = x.toString() + 'px';
-            posY = y.toString() + 'px';
+            // spotcommentelem.style.position = "absolute";
+            // posX = x.toString() + 'px';
+            // posY = y.toString() + 'px';
     
-            spotcommentelem.style.top = posY;
-            spotcommentelem.style.left = posX;
-            spotcommentelem.style.zIndex = 1000;
-        
+            // spotcommentelem.style.top = posY;
+            // spotcommentelem.style.left = posX;
+            // spotcommentelem.style.zIndex = 1000;
     
-            spotcommentelem.style.position = "absolute";
-            document.body.appendChild(spotcommentelem);
+            // spotcommentelem.style.position = "absolute";
+            // document.body.appendChild(spotcommentelem);
+            addElementtobody(spotcommentelem, posX, posY)
 
 
             post.removeEventListener('mouseup', addcomment);
@@ -314,17 +314,24 @@ function inserted() {
             // itemdata = JSON.parse(localStorage.getItem(itemkey));
             // console.log(itemdata, itemdata.posX)
 
-            data = [];
             dataitem = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
-            itemkey = 'spotcomments' + commentid.toString();
+            itemkey = 'spotcomments';
 
             commentid+=1;
             localStorage.setItem('currentcommentid', commentid);
             
-            sendObjectToDevTools(dataitem);
-            localStorage.setItem(itemkey, JSON.stringify(dataitem));
-            itemdata = JSON.parse(localStorage.getItem(itemkey));
-            console.log(itemdata, itemdata.posX)
+
+            data = JSON.parse(localStorage.getItem(itemkey));
+            if(data == null) {
+                data = [];
+            }
+            console.log(data)
+            data.push(dataitem)
+            localStorage.setItem(itemkey, JSON.stringify(data));
+            message = dataitem;
+            message.alldata = JSON.stringify(data);
+            sendObjectToDevTools(message);
+            console.log(data)
         }
        
     }
