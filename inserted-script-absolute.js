@@ -320,8 +320,8 @@ function inserted() {
             commentid+=1;
             localStorage.setItem('currentcommentid', commentid);
             
-            sendObjectToDevTools(data);
-            localStorage.setItem(itemkey, JSON.stringify(data));
+            sendObjectToDevTools(dataitem);
+            localStorage.setItem(itemkey, JSON.stringify(dataitem));
             itemdata = JSON.parse(localStorage.getItem(itemkey));
             console.log(itemdata, itemdata.posX)
         }
