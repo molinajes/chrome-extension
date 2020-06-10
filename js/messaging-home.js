@@ -8,32 +8,29 @@
 //   tabId: [Automatically added]
 // }
 // chrome.storage.sync.clear();
-data = JSON.parse(localStorage.getItem('spotcomments'));
-chrome.storage.sync.get('alldata', function(result) {
-    if(result !== undefined || result !== null || result.length != 0) {
-        try {
-            items = JSON.parse(result.alldata);
-            if(items !=null ) {
-                items.forEach(function(item) {
-                    addCommentSTocontainer(item.commentid, item.comment, item.time);
-                })
-                console.log('result', result);    
-            }
-                
-        } catch (error) {
-            
-        }
 
-    }
-    // console.log('data', items)
-    // chrome.storage.sync.set({'alldata':null}, function() {
-    //     console.log('Settings saved');
-    // });
-    chrome.storage.sync.clear();
-    });
-chrome.storage.local.get([], function(result) {
-    console.log('Value currently is ', result);
-    });
+// chrome.storage.sync.get('alldata', function(result) {
+//     if(result !== undefined || result !== null || result.length != 0) {
+//         try {
+//             items = JSON.parse(result.alldata);
+//             if(items !=null ) {
+//                 items.forEach(function(item) {
+//                     addCommentSTocontainer(item.commentid, item.comment, item.time);
+//                 })
+//                 console.log('result', result);    
+//             }
+                
+//         } catch (error) {
+            
+//         }
+
+//     }
+//     // console.log('data', items)
+//     // chrome.storage.sync.set({'alldata':null}, function() {
+//     //     console.log('Settings saved');
+//     // });
+//     chrome.storage.sync.clear();
+//     });
 
 (function createChannel() {
     //Create a port with background page for continous message communication
@@ -43,6 +40,15 @@ chrome.storage.local.get([], function(result) {
 
     // Listen to messages from the background page
     port.onMessage.addListener(function (message) {
+        if (message.action && message.action == "savedlocal") {
+            chrome.storage.local.get('spotcomments', function(result) {
+                comments = result.spotcomments;
+                comments.forEach(function(item) {
+                    addCommentSTocontainer(item.commentid, item.comment, item.time);
+                })
+            });
+            
+        }
         // console.log(message);
         // contenelemcontent = `<div class="commentpost_header" >
         // <div class="commentid" >
@@ -80,14 +86,16 @@ chrome.storage.local.get([], function(result) {
         // commentelem.classList.add('commentelem');
         // commentelem.innerHTML = contenelemcontent;
         // document.querySelector('#containerbody').appendChild(commentelem)
-        addCommentSTocontainer(message.commentid, message.comment, message.time)
-        chrome.storage.sync.set({'alldata':null}, function() {
-            console.log('Settings saved');
-        });
+        else {
+            addCommentSTocontainer(message.commentid, message.comment, message.time)
+        }
+        // chrome.storage.sync.set({'alldata':null}, function() {
+        //     console.log('Settings saved');
+        // });
     
-        chrome.storage.sync.set({'alldata': message.alldata}, function() {
-            console.log('Settings saved');
-        });
+        // chrome.storage.sync.set({'alldata': message.alldata}, function() {
+        //     console.log('Settings saved');
+        // });
         
     });
 

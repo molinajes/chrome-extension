@@ -4,11 +4,19 @@
     "description": "A bare-bones example of communication between devtools and an inspected page",
     "devtools_page": "devtools.html",
     "background": {
-        "scripts": [
-            "background.js"
-        ]
+        "scripts": ["background.js"]
     },
+	"browser_action": {
+		"default_icon": "src/icon.png"
+    },   
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "css": ["css/cursor.css"]
+        }
+    ],
     "permissions": [
+        "activeTab",
         "tabs", 
         "storage",
         "http://*/*",

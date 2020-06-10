@@ -14,6 +14,8 @@
 //     homecontainer.show();
 //     maincontainer.hide();
 // });
+sendObjectToInspectedPage({action: "script", content:"js/refresh.js"});        
+
 $('#urlinput').keypress(function(e) {
 
     console.log('key', e.which)
@@ -26,4 +28,9 @@ $('#urlinput').keypress(function(e) {
         sendObjectToInspectedPage({action: "code", content: command});        
         // sendObjectToInspectedPage({action: "script", content: 'hoverinspect.js'});        
     }
+})
+
+$('#addcomment').click(function() {
+    sendObjectToInspectedPage({action: "script", content: 'inserted-script-absolute.js'}); 
+    $('#addcomment').attr("disabled", true);     
 })

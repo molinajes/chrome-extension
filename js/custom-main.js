@@ -24,9 +24,9 @@ $('#urlinput').keypress(function(e) {
         command = `window.location.href = "${url}"`;
         console.log(url)
         sendObjectToInspectedPage({action: "code", content: command});        
-        sendObjectToInspectedPage({action: "script", content: 'hoverinspect.js'});        
+        // sendObjectToInspectedPage({action: "script", content: 'hoverinspect.js'});        
     }
 })
-$('#addcomment').click(function() {
-    sendObjectToInspectedPage({action: "script", content: 'inserted-script-absolute.js'});        
-})
+// $('#addcomment').click(function() {
+//     sendObjectToInspectedPage({action: "script", content: 'inserted-script-absolute.js'});        
+// })

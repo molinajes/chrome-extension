@@ -4,6 +4,77 @@
 // Can use:
 // chrome.tabs.*
 // chrome.extension.*
+// (function() {
+
+// 	var tabs = {};
+
+
+// 	var inspect = {
+		
+// 		// css, js script is activated and send 'activate' action to hoverinspect.js.
+// 		activate: function(id) {
+
+// 			this.id = id;
+
+// 			chrome.tabs.executeScript(this.id, {
+// 				file: 'toggle.js'
+// 			}, function() {
+// 				chrome.tabs.sendMessage(this.id, {
+// 					action: 'activate'
+// 				});
+// 			}.bind(this));
+
+// 			chrome.browserAction.setIcon({
+// 				tabId: this.id,
+// 				path: {
+// 					19: "src/icon_active.png"
+// 				}
+// 			});
+// 		},
+
+// 		// send 'deactivaate' action to hoverinspect.js.
+// 		deactivate: function() {
+
+// 			chrome.tabs.sendMessage(this.id, {
+// 				action: 'deactivate'
+// 			});
+
+// 			chrome.browserAction.setIcon({
+// 				tabId: this.id,
+// 				path: {
+// 					19: "src/icon.png"
+// 				}
+// 			});
+// 		}
+
+// 	};
+
+// 	// whenever a user click extension icon, activate or deactivate function is called.
+// 	function toggle(tab) {
+
+// 		if (!tabs[tab.id]) {
+// 			tabs[tab.id] = Object.create(inspect);
+// 			tabs[tab.id].activate(tab.id);
+// 		} else {
+// 			tabs[tab.id].deactivate();
+// 			for (var tabId in tabs) {
+// 				if (tabId == tab.id) delete tabs[tabId];
+// 			}
+// 		}
+// 	}
+
+// 	// chrome.browserAction.onClicked.addListener(toggle);
+
+// })();
+
+
+
+
+
+
+
+
+
 
 chrome.extension.onConnect.addListener(function (port) {
 

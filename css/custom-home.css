@@ -32,6 +32,7 @@
     background-color: #131820;
     border: solid 1px white;
     border-radius: 5px;
+    color: white;
 }
 #urlinput:hover {
     border: none;

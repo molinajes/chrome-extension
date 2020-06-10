@@ -2,8 +2,9 @@
 var postedflag = false;
 var commentid = 1;
 function inserted() {
-    localStorage.clear();
-    localStorage.setItem('currentcommentid', 1);
+
+    // localStorage.clear();
+    // localStorage.setItem('currentcommentid', 1);
     window.innerHeight = 900;
     window.innerWidth = 1440;
     console.log("Here is addcomments")
@@ -11,10 +12,12 @@ function inserted() {
     // document.removeEventListener('mousemove', this.log);
     // document.removeEventListener('scroll', this.layout);
     // document.removeEventListener('click', this.toggle);
-    document.body.style.cursor = "url";
+    document.body.classList.add("changecursor");
     document.addEventListener("click",handler);
     function handler(event) {
-        // if(postedflag) {
+        eventlist = document.eventListenerList;
+        console.log('event', eventlist);
+                // if(postedflag) {
         //     postedflag = false;
         //     return;
         // }
@@ -301,7 +304,7 @@ function inserted() {
             console.log(comment);
             // commentid = parseInt(localStorage.getItem('currentcommentid'));
             date = new Date();
-            time = date.getTime();
+            
 
             // data = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
             // itemkey = 'spotcomments_' + commentid.toString();
@@ -314,8 +317,11 @@ function inserted() {
             // itemdata = JSON.parse(localStorage.getItem(itemkey));
             // console.log(itemdata, itemdata.posX)
 
-            dataitem = {commentid:commentid, posX:posX, posY:posY, comment:comment, time:time};
+            dataitem = {user:'',url:window.location.href, commentid:commentid, comment:comment, posX:posX, posY:posY, time:date, width:window.innerWidth, height:window.innerHeight};
+            
+            
             itemkey = 'spotcomments';
+
 
             commentid+=1;
             localStorage.setItem('currentcommentid', commentid);
@@ -328,10 +334,17 @@ function inserted() {
             console.log(data)
             data.push(dataitem)
             localStorage.setItem(itemkey, JSON.stringify(data));
+            chrome.storage.local.set({itemkey:data}, function(){
+                console.log({action:"savedlocal"});
+                // sendObjectToDevTools({action:"savedlocal"});
+            });
             message = dataitem;
             message.alldata = JSON.stringify(data);
             sendObjectToDevTools(message);
-            console.log(data)
+            console.log(data);
+            savecomment(dataitem);
+
+
         }
        
     }
@@ -347,6 +360,25 @@ function addElementtobody(el, posX, posY) {
 
 
     document.body.appendChild(el);
+}
+
+function savecomment(dataitem) {
+    var data = JSON.stringify(dataitem);
+
+    var xhr = new XMLHttpRequest();
+    // xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+        console.log(this.responseText);
+    }
+    });
+
+    xhr.open("POST", "http://localhost:3000/comments");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
+
 }
 
 function sendObjectToDevTools(message) {
