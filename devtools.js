@@ -18,5 +18,5 @@
 //     });
 // }());
 
-chrome.devtools.panels.create("Addcomments", "toast.png", "panel-home.html", function(panel) {}); 
+chrome.devtools.panels.create("Addcomments", "avarta.png", "panel-home.html", function(panel) {}); 
 

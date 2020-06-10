@@ -15,7 +15,7 @@
 //     maincontainer.hide();
 // });
 sendObjectToInspectedPage({action: "script", content:"js/refresh.js"});        
-
+$('#addcomment').attr("disabled", false);
 $('#urlinput').keypress(function(e) {
 
     console.log('key', e.which)
